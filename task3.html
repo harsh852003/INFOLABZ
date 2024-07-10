@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr no.</th>
+                <th>State</th>
+                <th>Confirmed Case</th>
+                <th>Recovered Case</th>
+                <th>Deaths Case</th>
+            </tr>
+        </thead>
+        <tbody id="body">
+
+        </tbody>
+    </table>
+    <script>
+
+        async function fetchData() {
+            try {
+                let response = await fetch("https://data.covid19india.org/data.json");
+                let responseData = await response.json();
+                let data = responseData.statewise;
+                console.log(data)
+
+                const id = document.getElementById("body");
+                data.forEach((state, index) => {
+                    const row = document.createElement('tr');
+
+                    const srNoCell = document.createElement('td');
+                    srNoCell.textContent = index + 1;
+                    row.appendChild(srNoCell);
+
+                    const stateName = document.createElement('td');
+                    stateName.textContent = state.state;
+                    row.appendChild(stateName);
+
+                    const confirmed = document.createElement('td');
+                    confirmed.textContent = state.confirmed;
+                    row.appendChild(confirmed);
+
+                    const recovered = document.createElement('td');
+                    recovered.textContent = state.recovered;
+                    row.appendChild(recovered);
+
+                    const death = document.createElement('td');
+                    death.textContent = state.deaths;
+                    row.appendChild(death);
+
+                    body.appendChild(row)
+                })
+
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        }
+        fetchData();
+    </script>
+    
+
+</body>
+
+</html>

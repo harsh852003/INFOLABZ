@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    const checkEvenOdd = (num)=>{
+        if(num%2==0){
+            alert("the given number is even");
+        }
+        else{
+            alert("the given number is odd");
+        }
+    }
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        const number = parseInt(document.getElementById('inputnum').value);
+        checkEvenOdd(number);
+    }
+</script>
+<body>
+    <form onsubmit="handleSubmit(event)">
+        <label for="inputnum">Enter a number</label>
+        <input type="text" id="inputnum" name ="inputnum" required>
+        <button type="submit">check</button>
+
+    </form>
+    
+</body>
+</html>

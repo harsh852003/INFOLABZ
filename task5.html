@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="dateForm" onsubmit="submitForm(event)"> 
+        <label for="date">Enter a date</label>
+        <input type="date" id="date" name ="date" required>
+        <button type="submit">check</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>New Cases</th>
+                <th>New Death</th>
+            </tr>
+        </thead>
+        <tbody id="body">
+
+        </tbody>
+    </table>
+        
+    <script>
+
+        function submitForm(e){
+            e.preventDefault();
+            const date = document.getElementById("date").value;
+            console.log(date)
+            fetchData(date);
+        }
+       async function fetchData(date){
+            try{
+                const resopse = await fetch("https://data.covid19india.org/data.json")
+                const responseData =  await resopse.json();
+                let data = responseData.cases_time_series;
+                console.log(data);
+
+                const matchingDate = data.find(item => item.dateymd === date)
+                if(matchingDate){
+                    console.log("Date is same")
+    
+                        const row = document.createElement('tr');
+
+                        const newCases = document.createElement('td');
+                        newCases.textContent = matchingDate.dailyconfirmed;
+                        row.appendChild(newCases);
+
+                        const death = document.createElement('td');
+                        death.textContent=matchingDate.dailydeceased;
+                        row.appendChild(death);
+
+                        const id = document.getElementById('body');
+                        body.innerHTML = '';
+                        id.appendChild(row);
+        
+                }
+                else{
+                    alert("Date is not same")
+                }
+
+            }
+            catch(error){
+                console.log("error",error);
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>

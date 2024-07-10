@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+     
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="registrationForm" onsubmit="submitForm(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required><br><br>
+
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="Male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label><br><br>
+
+        <label for="city">City:</label>
+        <select id="city" name="city" required>
+            <option value="Rajkot">Rajkot</option>
+            <option value="Visnagar">Visnagar</option>
+            <option value="Gandhinagar">Gandhinagar</option>
+            <option value="Ahemedabad">Ahemedabad</option>
+            <option value="Patan">Patan</option>
+        </select><br><br>
+
+        <label for="address">Address:</label><br>
+        <textarea id="address" name="address" rows="4" cols="50" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Submitted Data</h2>
+    <table id="resultTable">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Gender</th>
+            <th>City</th>
+            <th>Address</th>
+        </tr>
+    </table>
+
+    <script>
+        function submitForm(e){
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const city = document.getElementById("city").value;
+            const address = document.getElementById("address").value;
+            const resultTable = document.getElementById("resultTable");
+
+            const row = resultTable.insertRow();
+            row.insertCell(0).innerText = name;
+            row.insertCell(1).innerText = email;
+            row.insertCell(2).innerText = phone;
+            row.insertCell(3).innerText = gender;
+            row.insertCell(4).innerText = city;
+            row.insertCell(5).innerText = address;
+
+            document.getElementById("registrationForm").reset();
+
+        }
+    </script>
+    
+</body>
+</html>
