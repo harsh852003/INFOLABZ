@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inshorts API Data in Bootstrap Table</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Sports News</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Content</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody id="newsTableBody">
+        <!-- News articles will be inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Bootstrap JS (Optional for some features) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- JavaScript to fetch and populate table -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch data from the API
+      fetch('https://inshortsapi.vercel.app/news?category=sports')
+        .then(response => response.json())
+        .then(data => {
+          console.log('API Data:', data);
+          // Populate table rows
+          const newsTableBody = document.getElementById('newsTableBody');
+          data.data.forEach((article, index) => {
+            const row = `
+              <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${article.title}</td>
+                <td>${article.author}</td>
+                <td>${article.content}</td>
+                <td>${new Date(article.date).toLocaleDateString()}</td>
+              </tr>
+            `;
+            newsTableBody.innerHTML += row;
+          });
+        })
+        .catch(error => console.error('Error fetching news:', error));
+    });
+  </script>
+</body>
+</html>

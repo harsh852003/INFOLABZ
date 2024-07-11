@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Universities</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-center">List of Universities in India</h1>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">SR NO</th>
+                <th scope="col">UNIVERSITY NAME</th>
+                <th scope="col">STATE-PROVINCE</th>
+                <th scope="col">WEBSITE LINK</th>
+            </tr>
+        </thead>
+        <tbody id="university-table">
+            <!-- Dynamic content will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchUniversities() {
+            const response = await fetch('http://universities.hipolabs.com/search?country=india');
+            const data = await response.json();
+
+            const tableBody = document.getElementById('university-table');
+            data.forEach((university, index) => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <th scope="row">${index + 1}</th>
+                    <td>${university.name}</td>
+                    <td>${university['state-province'] || 'N/A'}</td>
+                    <td><a href="${university.web_pages[0]}" target="_blank">Visit Site</a></td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchUniversities);
+    </script>
+</body>
+</html>
